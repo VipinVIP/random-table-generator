@@ -58,6 +58,15 @@
               add +
             </button>
           </div>
+          <div class="col-2">
+            <button
+              type="button"
+              class="btn btn-danger mb-3 disabled"
+              onclick="deleteRow('row-1');"
+            >
+              Delete
+            </button>
+          </div>
         </form>
       </div>
       <hr />
@@ -79,6 +88,14 @@
       >
         Generate Values
       </button>
+    </div>
+    <div
+      class="alert alert-danger position-absolute d-none row w-50"
+      style="right: 25%; top: 5%"
+      role="alert"
+    >
+      <i class="bi bi-exclamation-triangle-fill col-1"></i>
+      <div class="col-5 mx-3"></div>
     </div>
     <div class="container mt-3 d-none" id="tableContainer">
       <h2 class="text-center my-4">Table</h2>

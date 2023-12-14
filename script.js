@@ -23,10 +23,17 @@ let names = [
 ];
 let objectArray = [];
 let counter = 1;
+
 const addNewRow = () => {
   let rowNode = document.getElementById("row-1");
+  if(rowNode.querySelector("input").value == ""){
+    showError("Enter a Field Name")
+    return
+  }
   let clonedNode = rowNode.cloneNode(true);
   clonedNode.setAttribute("id", `row-${++counter}`);
+  clonedNode.querySelector(".btn-danger").classList.remove("disabled");
+  clonedNode.querySelector(".btn-danger").setAttribute("onclick",`deleteRow('row-${counter}');`);
   document.getElementById("forms-container").appendChild(clonedNode);
 };
 
@@ -39,7 +46,16 @@ function generateObject() {
   let key, value, selectedType;
   let i = 1;
   while (i <= counter) {
+    if(document.getElementById(`row-${i}`)==null){
+      i++;
+      continue
+    }
     key = document.getElementById(`row-${i}`).querySelector("input").value;
+    
+    if(key==""){
+      showError("No Field Name");
+      return
+    }
     selectedType = document
       .getElementById(`row-${i}`)
       .querySelector("select").value;
@@ -71,6 +87,10 @@ function generateObjectArray() {
 
   let rowCount = parseInt(document.getElementById("noOfElements").value);
 
+  if(isNaN(rowCount)){
+    showError("No of Rows Empty");
+    return;
+  }
   for (index = 0; index < rowCount; index++) {
     objectArray = [...objectArray, generateObject()];
   }
@@ -140,4 +160,20 @@ function generateTableBody(arr) {
       cell.textContent = value;
     });
   });
+}
+
+const getNextNRows=(numberOfRows)=>{
+  
+}
+
+const deleteRow=(rowid)=>{
+    document.getElementById(rowid).remove();
+}
+
+const showError=(message)=>{
+  document.querySelector(".alert").classList.remove("d-none");
+  document.querySelector(".alert").querySelector("div").textContent=message;
+  setTimeout(()=>{
+    document.querySelector(".alert").classList.add("d-none");
+  },1500)
 }
