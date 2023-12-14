@@ -70,24 +70,28 @@
         </form>
       </div>
       <hr />
-      <div class="input-group mb-3 w-25 ms-4">
-        <span class="input-group-text" id="basic-addon1">No of rows</span>
-        <input
-          type="number"
-          class="form-control"
-          placeholder="for eg. 5"
-          aria-label="Username"
-          aria-describedby="basic-addon1"
-          id="noOfElements"
-        />
+
+      
+      <div class="d-flex justify-content-center align-items-center">
+        <div class="input-group mb-3 w-25 ms-4 mt-3">
+          <span class="input-group-text" id="basic-addon1">No of rows</span>
+          <input
+            type="number"
+            class="form-control"
+            placeholder="for eg. 5"
+            aria-label="Username"
+            aria-describedby="basic-addon1"
+            id="noOfElements"
+          />
+        </div>
+        <button
+          type="button"
+          class="btn btn-success ms-4 col-5"
+          onclick="generateObjectArray();"
+        >
+          Generate Values
+        </button>
       </div>
-      <button
-        type="button"
-        class="btn btn-success ms-4"
-        onclick="generateObjectArray();"
-      >
-        Generate Values
-      </button>
     </div>
     <div
       class="alert alert-danger position-absolute d-none row w-50"

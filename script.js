@@ -121,7 +121,11 @@ const generateObjectArray = () => {
     headerNode.append(sortDescButton);
   });
   currentPageStart = 0;
+  document.getElementById("nextPageButton").classList.remove("disabled");
   generateTableBody(getNextNRows(objectArray, currentPageStart, 10));
+  if ((currentPageStart + 10) >= rowCount) {
+    document.getElementById("nextPageButton").classList.add("disabled");
+  }
 
   document.getElementById("tableContainer").classList.remove("d-none");
 }
