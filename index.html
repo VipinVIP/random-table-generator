@@ -111,6 +111,26 @@
             oninput="filterTable();"
           />
         </div>
+        <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-end">
+            <li class="page-item">
+              <a
+                class="page-link btn rounded-end-0 disabled"
+                id="previousPageButton"
+                onclick="getPreviousNValues()"
+                >Previous</a
+              >
+            </li>
+            <li class="page-item">
+              <a
+                class="page-link btn rounded-start-0"
+                id="nextPageButton"
+                onclick="getNextNValues()"
+                >Next</a
+              >
+            </li>
+          </ul>
+        </nav>
       </div>
       <table
         id="displayTable"

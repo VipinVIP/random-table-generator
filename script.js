@@ -22,7 +22,10 @@ let names = [
   "Wilfred",
 ];
 let objectArray = [];
+let currentlyShownObjects=[];
 let counter = 1;
+let currentPageStart=0;
+let rowCount=0;
 
 const addNewRow = () => {
   let rowNode = document.getElementById("row-1");
@@ -85,7 +88,7 @@ function generateObjectArray() {
 
   objectArray.length = 0;
 
-  let rowCount = parseInt(document.getElementById("noOfElements").value);
+  rowCount = parseInt(document.getElementById("noOfElements").value);
 
   if(isNaN(rowCount)){
     showError("No of Rows Empty");
@@ -117,8 +120,8 @@ function generateObjectArray() {
     headerNode.append(sortAscButton);
     headerNode.append(sortDescButton);
   });
-
-  generateTableBody(objectArray);
+  currentPageStart=0;
+  generateTableBody(getNextNRows(objectArray,currentPageStart,10));
 
   document.getElementById("tableContainer").classList.remove("d-none");
 }
@@ -162,8 +165,8 @@ function generateTableBody(arr) {
   });
 }
 
-const getNextNRows=(numberOfRows)=>{
-  
+const getNextNRows=(arrayToSlice,startPosition,numberOfRows)=>{
+  return arrayToSlice.slice(startPosition,startPosition+numberOfRows)
 }
 
 const deleteRow=(rowid)=>{
@@ -176,4 +179,23 @@ const showError=(message)=>{
   setTimeout(()=>{
     document.querySelector(".alert").classList.add("d-none");
   },1500)
+}
+
+const getNextNValues=()=>{
+  currentPageStart+=10;
+  document.getElementById("previousPageButton").classList.remove("disabled");
+  generateTableBody(getNextNRows(objectArray,currentPageStart,10));
+  if((currentPageStart+10)>=rowCount){
+    document.getElementById("nextPageButton").classList.add("disabled");
+  }
+}
+
+const getPreviousNValues=()=>{
+  currentPageStart-=10;
+  document.getElementById("nextPageButton").classList.remove("disabled");
+  generateTableBody(getNextNRows(objectArray,currentPageStart,10));
+  if(currentPageStart<10){
+    currentPageStart=0;
+    document.getElementById("previousPageButton").classList.add("disabled");
+  }
 }
