@@ -22,40 +22,40 @@ let names = [
   "Wilfred",
 ];
 let objectArray = [];
-let currentlyShownObjects=[];
+let currentlyShownObjects = [];
 let counter = 1;
-let currentPageStart=0;
-let rowCount=0;
+let currentPageStart = 0;
+let rowCount = 0;
 
 const addNewRow = () => {
   let rowNode = document.getElementById("row-1");
-  if(rowNode.querySelector("input").value == ""){
+  if (rowNode.querySelector("input").value == "") {
     showError("Enter a Field Name")
     return
   }
   let clonedNode = rowNode.cloneNode(true);
   clonedNode.setAttribute("id", `row-${++counter}`);
   clonedNode.querySelector(".btn-danger").classList.remove("disabled");
-  clonedNode.querySelector(".btn-danger").setAttribute("onclick",`deleteRow('row-${counter}');`);
+  clonedNode.querySelector(".btn-danger").setAttribute("onclick", `deleteRow('row-${counter}');`);
   document.getElementById("forms-container").appendChild(clonedNode);
 };
 
-function getRandomNumber(low, high) {
+const getRandomNumber = (low, high) => {
   return parseInt(Math.random() * (high - low) + low);
 }
 
-function generateObject() {
+const generateObject = () => {
   let tempObject = {};
   let key, value, selectedType;
   let i = 1;
   while (i <= counter) {
-    if(document.getElementById(`row-${i}`)==null){
+    if (document.getElementById(`row-${i}`) == null) {
       i++;
       continue
     }
     key = document.getElementById(`row-${i}`).querySelector("input").value;
-    
-    if(key==""){
+
+    if (key == "") {
       showError("No Field Name");
       return
     }
@@ -81,7 +81,7 @@ function generateObject() {
   return tempObject;
 }
 
-function generateObjectArray() {
+const generateObjectArray = () => {
   //Empty everything previously inside table head, body and objectArray
   document.getElementById("displayTable").querySelector("thead").innerHTML = "";
   document.getElementById("displayTable").querySelector("tbody").innerHTML = "";
@@ -90,7 +90,7 @@ function generateObjectArray() {
 
   rowCount = parseInt(document.getElementById("noOfElements").value);
 
-  if(isNaN(rowCount)){
+  if (isNaN(rowCount)) {
     showError("No of Rows Empty");
     return;
   }
@@ -120,13 +120,13 @@ function generateObjectArray() {
     headerNode.append(sortAscButton);
     headerNode.append(sortDescButton);
   });
-  currentPageStart=0;
-  generateTableBody(getNextNRows(objectArray,currentPageStart,10));
+  currentPageStart = 0;
+  generateTableBody(getNextNRows(objectArray, currentPageStart, 10));
 
   document.getElementById("tableContainer").classList.remove("d-none");
 }
 
-function sortTable(column, order) {
+const sortTable = (column, order) => {
   objectArray.sort((a, b) => {
     if (order === "asc") {
       return a[column] > b[column] ? 1 : -1;
@@ -138,7 +138,7 @@ function sortTable(column, order) {
   generateTableBody(objectArray);
 }
 
-function filterTable() {
+const filterTable = () => {
   let substring = document.getElementById("searchBox").value;
 
   const filteredObjects = objectArray.filter((obj) =>
@@ -150,7 +150,7 @@ function filterTable() {
   generateTableBody(filteredObjects);
 }
 
-function generateTableBody(arr) {
+const generateTableBody = (arr) => {
   document.getElementById("displayTable").querySelector("tbody").innerHTML = "";
 
   arr.forEach((item) => {
@@ -165,37 +165,37 @@ function generateTableBody(arr) {
   });
 }
 
-const getNextNRows=(arrayToSlice,startPosition,numberOfRows)=>{
-  return arrayToSlice.slice(startPosition,startPosition+numberOfRows)
+const getNextNRows = (arrayToSlice, startPosition, numberOfRows) => {
+  return arrayToSlice.slice(startPosition, startPosition + numberOfRows)
 }
 
-const deleteRow=(rowid)=>{
-    document.getElementById(rowid).remove();
+const deleteRow = (rowid) => {
+  document.getElementById(rowid).remove();
 }
 
-const showError=(message)=>{
+const showError = (message) => {
   document.querySelector(".alert").classList.remove("d-none");
-  document.querySelector(".alert").querySelector("div").textContent=message;
-  setTimeout(()=>{
+  document.querySelector(".alert").querySelector("div").textContent = message;
+  setTimeout(() => {
     document.querySelector(".alert").classList.add("d-none");
-  },1500)
+  }, 1500)
 }
 
-const getNextNValues=()=>{
-  currentPageStart+=10;
+const getNextNValues = () => {
+  currentPageStart += 10;
   document.getElementById("previousPageButton").classList.remove("disabled");
-  generateTableBody(getNextNRows(objectArray,currentPageStart,10));
-  if((currentPageStart+10)>=rowCount){
+  generateTableBody(getNextNRows(objectArray, currentPageStart, 10));
+  if ((currentPageStart + 10) >= rowCount) {
     document.getElementById("nextPageButton").classList.add("disabled");
   }
 }
 
-const getPreviousNValues=()=>{
-  currentPageStart-=10;
+const getPreviousNValues = () => {
+  currentPageStart -= 10;
   document.getElementById("nextPageButton").classList.remove("disabled");
-  generateTableBody(getNextNRows(objectArray,currentPageStart,10));
-  if(currentPageStart<10){
-    currentPageStart=0;
+  generateTableBody(getNextNRows(objectArray, currentPageStart, 10));
+  if (currentPageStart < 10) {
+    currentPageStart = 0;
     document.getElementById("previousPageButton").classList.add("disabled");
   }
 }
